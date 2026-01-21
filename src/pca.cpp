@@ -1,4 +1,5 @@
 #include "include/pca.h"
+#include <random>
 
 /**
  * Constructor
@@ -32,7 +33,9 @@ Eigen::MatrixXd PCA::compute_subset(Eigen::MatrixXd X, int dim) {
     // Select random items
     Eigen::VectorXd indexes(this->N);
     for (int i = 0; i < this->N; i++) { indexes(i) = i; }
-    std::random_shuffle(indexes.begin(), indexes.end());
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(indexes.begin(), indexes.end(), g);
 
     // Get S
     for (int i = 0; i < dim; i++) { S.col(i) = X.col(indexes(i)); }

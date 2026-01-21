@@ -1,4 +1,5 @@
 #include "include/gem.h"
+#include <random>
 
 /**
  * Constructor
@@ -54,7 +55,10 @@ Eigen::MatrixXd GEM::partition_data(Eigen::MatrixXd X, float partition/*=0.15*/)
     Eigen::VectorXd indexes(this->N);
     int i, j;
     for (i = 0; i < this->N; i++) { indexes(i) = i; }
-    std::random_shuffle(indexes.begin(), indexes.end());
+    
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(indexes.begin(), indexes.end(), g);
 
     // Get S1 
     for (i = 0; i < this->N1; i++) { this->S1.col(i) = X.col(indexes(i)); }
