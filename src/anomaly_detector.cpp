@@ -7,6 +7,45 @@
 #include <random>
 #include <cstring>
 #include <Eigen/Dense>
+#include <opencv2/opencv.hpp>
+
+#include <opencv2/opencv.hpp>
+#include <Eigen/Dense>
+#include <string>
+#include <stdexcept>
+
+/**
+ * Load image from file and convert to Eigen::MatrixXd format
+ */
+Eigen::MatrixXd load_image_dataset(const std::string& fileName)
+{
+
+    cv::Mat image = cv::imread(fileName, cv::IMREAD_UNCHANGED);
+
+    if (image.empty())
+        throw std::runtime_error("Could not open or find the image: " + fileName);
+
+    cv::Mat gray;
+    if (image.channels() == 3)
+        cv::cvtColor(image, gray, cv::COLOR_BGR2GRAY);
+    else
+        gray = image;
+
+    cv::Mat gray_double;
+    gray.convertTo(gray_double, CV_64F);
+
+    Eigen::MatrixXd dataset(gray_double.rows, gray_double.cols);
+
+    for (int i = 0; i < gray_double.rows; ++i)
+    {
+        for (int j = 0; j < gray_double.cols; ++j)
+        {
+            dataset(i, j) = gray_double.at<double>(i, j);
+        }
+    }
+
+    return dataset;
+}
 
 /**
  * Generate a matrix of random values given 5 parameters

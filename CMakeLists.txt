@@ -18,7 +18,7 @@ endif()
 find_package(OpenCV REQUIRED)
 find_package(Eigen3 REQUIRED)
 
-set(SOURCE_FILES src/gem.cpp src/gem.cpp)
+set(SOURCE_FILES src/gem.cpp src/pca.cpp)
 set(HEADER_FILES src/include/gem.h src/include/lambert.h src/include/pca.h src/include/suv.h)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES} src/anomaly_detector.cpp)

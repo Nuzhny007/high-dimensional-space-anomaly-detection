@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <Eigen/Dense>
-
+#include <opencv2/opencv.hpp>
 
 void save_matrix(Eigen::MatrixXd X, std::string file_path) {
     const Eigen::IOFormat CSVFormat(Eigen::FullPrecision, Eigen::DontAlignCols, ", ", "\n");
